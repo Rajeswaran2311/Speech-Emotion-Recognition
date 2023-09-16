@@ -5,4 +5,5 @@ librosa
 soundfile
 sounddevice
 Pillow
-pyAudio
+pyaudio
+portaudio
