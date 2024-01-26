@@ -88,54 +88,54 @@ def prediction():
 
        
 
-    # Record audio
-    st.subheader("Record Audio")
-    recording = st.button("Start Recording")
-    if recording:
-        with tempfile.NamedTemporaryFile(delete=False) as tmp_audio:
-            st.info("Recording... Click 'Stop Recording' to finish.")
-            audio_filename = tmp_audio.name
-            audio_stream = sd.OutputStream(callback=tmp_audio.write, channels=1, dtype='int16')
-            audio_stream.start()
-            st.button("Stop Recording")
+    # # Record audio
+    # st.subheader("Record Audio")
+    # recording = st.button("Start Recording")
+    # if recording:
+    #     with tempfile.NamedTemporaryFile(delete=False) as tmp_audio:
+    #         st.info("Recording... Click 'Stop Recording' to finish.")
+    #         audio_filename = tmp_audio.name
+    #         audio_stream = sd.OutputStream(callback=tmp_audio.write, channels=1, dtype='int16')
+    #         audio_stream.start()
+    #         st.button("Stop Recording")
 
-        if st.button("Stop Recording"):
-            audio_stream.stop()
-            audio_stream.close()
-            st.success("Recording stopped.")
-            st.audio(audio_filename, format="audio/wav")
-            os.remove(audio_filename)
-         # Predict emotion
-        if st.button("Predict Emotion"):
-            st.info("Predicting emotion... Please wait.")
-            audio_data= sf.read(uploaded_audio)
-            mfcc_features = extract_mfcc_for_prediction(audio_data)
-            pred = np.expand_dims(mfcc_features, axis=0)
-            pred = np.expand_dims(pred, axis=-1)
-            emotion = predict_emotion(pred, audio_info.samplerate)
-            st.success(f"Predicted Emotion: {emotion}")
+    #     if st.button("Stop Recording"):
+    #         audio_stream.stop()
+    #         audio_stream.close()
+    #         st.success("Recording stopped.")
+    #         st.audio(audio_filename, format="audio/wav")
+    #         os.remove(audio_filename)
+    #      # Predict emotion
+    #     if st.button("Predict Emotion"):
+    #         st.info("Predicting emotion... Please wait.")
+    #         audio_data= sf.read(uploaded_audio)
+    #         mfcc_features = extract_mfcc_for_prediction(audio_data)
+    #         pred = np.expand_dims(mfcc_features, axis=0)
+    #         pred = np.expand_dims(pred, axis=-1)
+    #         emotion = predict_emotion(pred, audio_info.samplerate)
+    #         st.success(f"Predicted Emotion: {emotion}")
     
-def visualization():
-    st.write("## Exploratory Data Visualization")
-    col1, col2 = st.columns(2)
+# def visualization():
+#     st.write("## Exploratory Data Visualization")
+#     col1, col2 = st.columns(2)
 
-    original = Image.open('spec-happy.png')
-    col1.header("Spectogram of Happy")
-    col1.image(original, use_column_width=True)
+#     original = Image.open('spec-happy.png')
+#     col1.header("Spectogram of Happy")
+#     col1.image(original, use_column_width=True)
 
-    grayscale = Image.open('spec-sad.png')
-    col2.header("Spectogram of Sad")
-    col2.image(grayscale, use_column_width=True)
+#     grayscale = Image.open('spec-sad.png')
+#     col2.header("Spectogram of Sad")
+#     col2.image(grayscale, use_column_width=True)
     
-    col3, col4 = st.columns(2)
+#     col3, col4 = st.columns(2)
 
-    original1 = Image.open('wave-angry.png')
-    col3.header("Wave form of Angry")
-    col3.image(original1, use_column_width=True)
+#     original1 = Image.open('wave-angry.png')
+#     col3.header("Wave form of Angry")
+#     col3.image(original1, use_column_width=True)
 
-    grayscale1 = Image.open('wave-disgust.png')
-    col4.header("Wave form of Disgust")
-    col4.image(grayscale1, use_column_width=True)
+#     grayscale1 = Image.open('wave-disgust.png')
+#     col4.header("Wave form of Disgust")
+#     col4.image(grayscale1, use_column_width=True)
         
 
 
@@ -152,7 +152,7 @@ def main():
         home()
     elif page == "Prediction":
         prediction()
-    elif page == "Exploratory Data Visualization":
-        visualization()
+    # elif page == "Exploratory Data Visualization":
+    #     visualization()
    
 main()
